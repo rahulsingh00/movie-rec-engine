@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <title>CineMatch — Educational Movie Recommendation Engine</title>
+  <meta name="description" content="Discover movies and learn machine learning & natural language processing concepts interactively.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Prevent FOUC (Flash of Unstyled Content) -->
+  <script>
+    {
+      const colorScheme = localStorage.getItem("color-scheme") || "dark";
+      document.querySelector('meta[name="color-scheme"]').content = colorScheme === "dark" ? "dark" : "light";
+      document.documentElement.classList.toggle("dark", colorScheme === "dark");
+    }
+  </script>
+
+  <link rel="stylesheet" href="./src/styles.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="logo">
+        <span class="logo-icon">🎬</span>
+        <h1>CineMatch</h1>
+        <span class="badge">NLP/ML Sandbox</span>
+      </div>
+      <div class="header-actions">
+        <a href="../docs/README.md" class="docs-link" target="_blank">📖 Read Docs</a>
+        <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle dark mode">
+          <span class="toggle-icon">🌓</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- App Layout -->
+    <div class="main-layout">
+      
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <section class="search-section">
+          <h2>Search Movie Library</h2>
+          <div class="search-wrapper">
+            <input type="text" id="search-input" placeholder="Type a title or genre..." autocomplete="off">
+            <span class="search-icon">🔍</span>
+          </div>
+        </section>
+
+        <section class="genre-filter-section">
+          <h3>Filter Genres</h3>
+          <div id="genres-container" class="genres-container">
+            <!-- Populated dynamically -->
+          </div>
+        </section>
+
+        <section class="movies-list-section">
+          <div class="section-header">
+            <h3>All Movies</h3>
+            <span id="movie-count" class="count-tag">0</span>
+          </div>
+          <div id="movies-list" class="movies-list">
+            <!-- Populated dynamically -->
+          </div>
+        </section>
+      </aside>
+
+      <!-- Content Area -->
+      <main class="content-area">
+        
+        <!-- Hero (Selected Movie Details) -->
+        <section id="selected-movie-hero" class="hero-section card empty">
+          <div class="empty-state">
+            <div class="empty-icon">🍿</div>
+            <h2>Select a movie to see details and recommendations</h2>
+            <p>Choose any movie from the left library sidebar to activate the NLP term-frequency and cosine similarity recommendation matching.</p>
+          </div>
+        </section>
+
+        <!-- Dynamic Explainer of the Vector Space matching -->
+        <section id="math-explainer" class="math-explainer card hidden">
+          <div class="explainer-header">
+            <h3>🔬 NLP Similarity Analysis</h3>
+            <span class="algorithm-tag">TF-IDF Vector Space Model</span>
+          </div>
+          <div class="explainer-body">
+            <p>
+              To find recommendations, the backend converted movie overviews and genres into a <strong>TF-IDF Vector</strong> (excluding stop words). 
+              We calculate the <strong>Cosine Similarity</strong> ($\cos \theta$) between the selected movie's vector and every other movie. 
+              The matches below have the highest similarity score.
+            </p>
+          </div>
+        </section>
+
+        <!-- Recommendations Grid -->
+        <section id="recommendations-section" class="recommendations-section hidden">
+          <div class="section-title-bar">
+            <h2>Recommended Matches</h2>
+            <span class="subtext">Sorted by Cosine Similarity Score</span>
+          </div>
+          <div id="recommendations-grid" class="recommendations-grid">
+            <!-- Populated dynamically -->
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>
