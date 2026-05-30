@@ -48,6 +48,14 @@ pip3 install -r backend/requirements.txt
 ```
 *Note: This will install FastAPI, Uvicorn, Pandas, and Scikit-learn required by the recommendation engine.*
 
+> [!TIP]
+> **Python 3 & Pip 3 Environment Conventions**: Always run commands using explicit version paths (`python3` and `pip3` instead of `python` and `pip`) on macOS. This avoids resolving to legacy system Python 2.x runtimes.
+>
+> | Tool Command | Pros | Cons |
+> |---|---|---|
+> | **`python3` / `pip3`** | Explicit environment resolution; prevents "interpreter not found" on macOS systems. | Minor typing overhead. |
+> | **`python` / `pip`** | Slightly faster to type. | High risk of resolving to legacy system interpreters. |
+
 ### 2. Frontend Dependencies Installation
 Navigate to the `frontend/` folder and run `npm install` to setup Vite:
 ```bash

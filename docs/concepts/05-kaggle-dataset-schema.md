@@ -17,63 +17,21 @@ The full Kaggle download contains **7 CSV files**. Here is what they represent a
 | **`keywords.csv`** | Plot keywords describing movies. | `id`, `keywords` (JSON list of tags) | 46,219 | **Content Expansion**: Append plot keywords (e.g. "time travel", "dystopian") to `nlp_features` for better TF-IDF accuracy. |
 | **`links.csv`** | ID mapping files to link movies to external databases. | `movieId`, `imdbId`, `tmdbId` | 45,843 | **Metadata Linking**: Fetch poster images or live reviews dynamically using external API services. |
 
----
-
-## 🛠️ 2. Python 3 & Pip 3 Versioning Conventions
-
-### Why explicitly use `python3` and `pip3` instead of `python` and `pip`?
-
-On macOS and Unix environments, there is a distinct difference in executable paths.
-
-| Tool | Pro | Con |
-|---|---|---|
-| **`python3` / `pip3`** | **Explicit Environment Resolution**: Avoids linking to outdated Python 2.x system runtimes.<br>**Consistency**: Modern macOS systems do not symlink `python` by default, so typing `python3` prevents "command not found" errors. | **Keystroke Overhead**: Requires typing an extra `3` character. |
-| **`python` / `pip`** | **Shorter Command**: Slightly faster to type in the terminal.<br>**Windows Default**: On Windows systems, Python installs as `python.exe` and `python3` commands are often unrecognized. | **Environment Ambiguity**: On macOS, typing `python` might invoke a legacy Python 2 interpreter (installed for OS support) instead of your Python 3 environment. |
-
-*   **Conclusion**: For development on **macOS**, always run explicitly with `python3` and `pip3` to ensure standard packages are installed into your Python 3 environment.
 
 ---
 
-## 💻 3. Essential CLI Commands Reference
+## 🛠️ 2. Data Cleaning & Integration Commands
 
-Here are all the commands used to set up, clean, and test the scale-optimized engine:
+To ingest, verify, and seed the Kaggle dataset files into the recommender pipeline locally, run the following ingestion scripts:
 
-### A. Ingestion & Preprocessing
-To clean the raw `movies_metadata.csv` and filter it to the top ~5,000 popular movies:
+### A. Movie Metadata Preprocessing
+Filters raw `movies_metadata.csv` to popular titles and parses categories structure:
 ```bash
 python3 backend/app/ingest_kaggle.py
 ```
 
-### B. Dependencies Installation
-Install backend python libraries:
+### B. User Ratings Database Seeding
+Extracts validation ratings from `ratings_small.csv` and populates the SQLite transactions model:
 ```bash
-pip3 install -r backend/requirements.txt
+python3 backend/app/seed_db.py
 ```
-Install frontend node packages:
-```bash
-cd frontend && npm install
-```
-
-### C. Python Instantiation Test
-Verify that the `MovieRecommender` class initializes, loads the cleaned dataset, and generates sparse matrices:
-```bash
-python3 -c "import sys; sys.path.append('backend'); from app.recommender import MovieRecommender; r = MovieRecommender(); print(r.df.head(2))"
-```
-
-### D. Live Recommendation Algorithm Test
-Test the dynamic cosine similarity matching speed and result quality (using ID `862` for *Toy Story*):
-```bash
-python3 -c "import sys; sys.path.append('backend'); from app.recommender import MovieRecommender; r = MovieRecommender(); print(r.get_recommendations(862, limit=2))"
-```
-
-### E. Run Dev Servers
-To run the full stack locally:
-*   **FastAPI API Server**:
-    ```bash
-    python3 backend/run.py
-    ```
-*   **Vite Frontend Dev Server**:
-    ```bash
-    cd frontend
-    npm run dev
-    ```
