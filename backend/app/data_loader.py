@@ -7,10 +7,18 @@ def load_movie_dataset():
     """
     # Resolve the path to the CSV file relative to this script
     current_dir = os.path.dirname(os.path.abspath(__file__))
-    csv_path = os.path.join(current_dir, "..", "data", "movies.csv")
     
-    if not os.path.exists(csv_path):
-        raise FileNotFoundError(f"Movie dataset not found at {csv_path}")
+    cleaned_csv_path = os.path.join(current_dir, "..", "data", "movies_cleaned.csv")
+    fallback_csv_path = os.path.join(current_dir, "..", "data", "movies.csv")
+    
+    if os.path.exists(cleaned_csv_path):
+        csv_path = cleaned_csv_path
+        print(f"Loading cleaned dataset from {csv_path}")
+    elif os.path.exists(fallback_csv_path):
+        csv_path = fallback_csv_path
+        print(f"Loading fallback dataset from {csv_path}")
+    else:
+        raise FileNotFoundError("Movie dataset not found")
         
     df = pd.read_csv(csv_path)
     

@@ -11,9 +11,6 @@ class MovieRecommender:
         # Fit and transform the nlp_features to construct the TF-IDF matrix
         self.tfidf_matrix = self.vectorizer.fit_transform(self.df["nlp_features"])
         
-        # Calculate the Cosine Similarity matrix
-        self.similarity_matrix = cosine_similarity(self.tfidf_matrix, self.tfidf_matrix)
-        
     def get_movies_list(self):
         """
         Returns a list of all movies with basic info (id, title, genres, tagline) for the frontend list.
@@ -47,8 +44,10 @@ class MovieRecommender:
             
         movie_idx = matching_indices[0]
         
-        # Fetch similarity scores for this movie
-        similarity_scores = list(enumerate(self.similarity_matrix[movie_idx]))
+        # Fetch similarity scores for this movie dynamically on-the-fly
+        scores = cosine_similarity(self.tfidf_matrix[movie_idx], self.tfidf_matrix).flatten()
+        similarity_scores = list(enumerate(scores))
+
         
         # Sort by similarity score descending, skipping the movie itself (index movie_idx)
         sorted_scores = sorted(

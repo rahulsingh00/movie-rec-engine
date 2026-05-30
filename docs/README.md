@@ -18,6 +18,7 @@
 | [Cosine Similarity](concepts/02-similarity.md) | Vector spaces and calculating metric distances |
 | [Recommendation Paradigms](concepts/03-recommendation.md) | Content-based filtering vs Collaborative filtering |
 | [Advanced Concepts](concepts/04-advanced-concepts.md) | Vector DBs, GNNs, Deep Learning Recommenders, and future projects |
+| [Kaggle Schema & Commands](concepts/05-kaggle-dataset-schema.md) | Maps the 7 raw CSVs, potential enhancements, and useful CLI scripts |
 
 ## 📋 Epics (Backlog & Milestones)
 
@@ -40,11 +41,11 @@ To experience and test the completed implementation:
 ### 1. Run the Backend API
 1. Install Python dependencies:
    ```bash
-   pip install -r backend/requirements.txt
+   pip3 install -r backend/requirements.txt
    ```
 2. Run the FastAPI development server:
    ```bash
-   python backend/run.py
+   python3 backend/run.py
    ```
    The backend will start on `http://127.0.0.1:8000`. You can access interactive Swagger documentation at `http://127.0.0.1:8000/docs`.
 
@@ -70,3 +71,4 @@ For self-paced study, read through the documentation in the following sequence:
 3. **[Recommendation Paradigms](concepts/03-recommendation.md)** — Put it all together and compare content-based approaches with collaborative filtering.
 4. **[System Overview](architecture/overview.md)** — Dive into how the FastAPI backend integrates with the Vite-based SPA frontend.
 5. **[Advanced Concepts](concepts/04-advanced-concepts.md)** — Discover industrial systems: Vector Databases, Transformers/BERT embeddings, and GNNs.
+6. **[Kaggle Schema & Commands](concepts/05-kaggle-dataset-schema.md)** — Reference sheet for running the model and understanding Kaggle's files.

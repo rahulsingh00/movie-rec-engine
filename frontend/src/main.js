@@ -131,7 +131,11 @@ function renderSidebarList() {
     return;
   }
 
-  displayMovies.forEach(movie => {
+  // Limit DOM rendering to top 100 movies for performance
+  const limit = 100;
+  const renderMovies = displayMovies.slice(0, limit);
+
+  renderMovies.forEach(movie => {
     const btn = document.createElement("button");
     btn.className = `movie-item-btn ${state.selectedMovieId === movie.id ? "active" : ""}`;
     btn.dataset.id = movie.id;

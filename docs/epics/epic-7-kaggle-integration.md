@@ -2,19 +2,19 @@
 
 Integrate the Kaggle "The Movies Dataset" to replace the mock library, optimizing similarity calculations to prevent memory exhaustion (OOM).
 
-## Status: ⚪ Planned
+## Status: ✅ Completed
 ## Priority: P1 (Recommended before Epic 4)
 
 ---
 
 ## 📋 Acceptance Criteria
 
-- [ ] Write a preprocessing CLI script to ingest Kaggle's raw `movies_metadata.csv`, drop corrupted rows, parse JSON columns (like `genres`), and filter the dataset to the top $M$ most popular movies (e.g. $M = 5,000$).
-- [ ] Refactor `data_loader.py` to load this optimized dataset instead of `movies.csv`.
-- [ ] Optimize similarity memory usage in `recommender.py` by removing the $N \times N$ precomputed matrix. Implement dynamic single-row similarity calculations on-the-fly:
+- [x] Write a preprocessing CLI script to ingest Kaggle's raw `movies_metadata.csv`, drop corrupted rows, parse JSON columns (like `genres`), and filter the dataset to the top $M$ most popular movies (e.g. $M = 5,000$).
+- [x] Refactor `data_loader.py` to load this optimized dataset instead of `movies.csv`.
+- [x] Optimize similarity memory usage in `recommender.py` by removing the $N \times N$ precomputed matrix. Implement dynamic single-row similarity calculations on-the-fly:
   $$\text{Query Vector} \times \text{TF-IDF Sparse Matrix}^T$$
-- [ ] Ensure API response times for `/api/recommend/{movie_id}` remain under 100ms for 5,000 movies.
-- [ ] Update frontend autocomplete search to handle search query limits (prevent rendering thousands of items in the dropdown list).
+- [x] Ensure API response times for `/api/recommend/{movie_id}` remain under 100ms for 5,000 movies.
+- [x] Update frontend autocomplete search to handle search query limits (prevent rendering thousands of items in the dropdown list).
 
 ---
 
