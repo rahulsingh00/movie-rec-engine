@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <title>CineMatch — Educational Movie Recommendation Engine</title>
+  <meta name="description" content="Discover movies and learn machine learning & natural language processing concepts interactively.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Prevent FOUC (Flash of Unstyled Content) -->
+  <script>
+    {
+      const colorScheme = localStorage.getItem("color-scheme") || "dark";
+      document.querySelector('meta[name="color-scheme"]').content = colorScheme === "dark" ? "dark" : "light";
+      document.documentElement.classList.toggle("dark", colorScheme === "dark");
+    }
+  </script>
+
+  <script type="module" crossorigin src="/assets/index-D3iuDu7b.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-DYcINlzV.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="logo">
+        <span class="logo-icon">🎬</span>
+        <h1>CineMatch</h1>
+        <span class="badge">Hybrid RecSys Sandbox</span>
+      </div>
+      <div class="header-actions">
+        <nav class="nav-tabs">
+          <button id="tab-recommender" class="nav-tab-btn active">Recommender</button>
+          <button id="tab-evaluation" class="nav-tab-btn">Evaluation Dashboard</button>
+        </nav>
+        <a href="../docs/README.md" class="docs-link" target="_blank">📖 Read Docs</a>
+        <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle dark mode">
+          <span class="toggle-icon">🌓</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- App Layout (Recommender View) -->
+    <div class="main-layout" id="recommender-view">
+      
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <!-- User Simulator Dropdown -->
+        <section class="user-simulator-section">
+          <h2>Active User Profile</h2>
+          <div class="select-wrapper">
+            <select id="user-select" class="user-select">
+              <option value="">Guest Mode (Content Only)</option>
+              <!-- Seeded users populated dynamically -->
+            </select>
+          </div>
+        </section>
+
+        <!-- Search Section -->
+        <section class="search-section">
+          <h2>Search Movie Library</h2>
+          <div class="search-mode-container">
+            <button class="search-mode-btn active" id="search-mode-keyword" data-mode="Keyword">Keyword</button>
+            <button class="search-mode-btn" id="search-mode-semantic" data-mode="Semantic">Semantic (AI)</button>
+          </div>
+          <div class="search-wrapper">
+            <input type="text" id="search-input" placeholder="Type a title, concept, or genre..." autocomplete="off">
+            <span class="search-icon">🔍</span>
+          </div>
+        </section>
+
+        <section class="genre-filter-section">
+          <h3>Filter Genres</h3>
+          <div id="genres-container" class="genres-container">
+            <!-- Populated dynamically -->
+          </div>
+        </section>
+
+        <section class="movies-list-section">
+          <div class="section-header">
+            <h3>All Movies</h3>
+            <span id="movie-count" class="count-tag">0</span>
+          </div>
+          <div id="movies-list" class="movies-list">
+            <!-- Populated dynamically -->
+          </div>
+        </section>
+      </aside>
+
+      <!-- Content Area -->
+      <main class="content-area">
+        
+        <!-- Hero (Selected Movie Details) -->
+        <section id="selected-movie-hero" class="hero-section card empty">
+          <div class="empty-state">
+            <div class="empty-icon">🍿</div>
+            <h2>Select a movie to see details and recommendations</h2>
+            <p>Choose any movie from the left library sidebar to activate the NLP term-frequency and cosine similarity recommendation matching.</p>
+          </div>
+        </section>
+
+        <!-- Dynamic Explainer of the Vector Space matching -->
+        <section id="math-explainer" class="math-explainer card hidden">
+          <div class="explainer-header">
+            <h3>🔬 RecSys Similarity Analysis</h3>
+            <span class="algorithm-tag" id="explainer-tag">TF-IDF Vector Space Model</span>
+          </div>
+          <div class="explainer-body">
+            <p id="explainer-text">
+              To find recommendations, the backend converted movie overviews and genres into a <strong>TF-IDF Vector</strong> (excluding stop words). 
+              We calculate the <strong>Cosine Similarity</strong> ($\cos \theta$) between the selected movie's vector and every other movie. 
+              The matches below have the highest similarity score.
+            </p>
+          </div>
+        </section>
+
+        <!-- Recommendations Grid -->
+        <section id="recommendations-section" class="recommendations-section hidden">
+          <div class="section-title-bar">
+            <h2 id="recommendations-title">Recommended Matches</h2>
+            <span class="subtext" id="recommendations-subtext">Sorted by Cosine Similarity Score</span>
+          </div>
+          <div id="recommendations-grid" class="recommendations-grid">
+            <!-- Populated dynamically -->
+          </div>
+        </section>
+
+      </main>
+    </div>
+
+    <!-- Evaluation Dashboard View -->
+    <div class="evaluation-view hidden" id="evaluation-view">
+      <div class="dashboard-header card">
+        <div class="header-main">
+          <h2>🔬 Recommendation Quality Evaluation</h2>
+          <span class="badge">Offline Metrics Sandbox</span>
+        </div>
+        <p>Scientific comparison of recommendation algorithms trained and tested on split user rating matrices (80% training, 20% validation).</p>
+      </div>
+
+      <!-- Metrics Summaries Grid -->
+      <div class="metrics-grid">
+        <!-- Content Card -->
+        <div class="metric-card card content-metric">
+          <h3>TF-IDF Content-Based</h3>
+          <div class="map-val" id="content-map">0.0%</div>
+          <div class="metric-label">Mean Average Precision (MAP)</div>
+          <div class="detailed-metrics">
+            <div>Precision@5: <span id="content-p5">0.0%</span></div>
+            <div>Recall@5: <span id="content-r5">0.0%</span></div>
+          </div>
+        </div>
+
+        <!-- SVD Card -->
+        <div class="metric-card card svd-metric">
+          <h3>SVD Collaborative</h3>
+          <div class="map-val" id="svd-map">0.0%</div>
+          <div class="metric-label">Mean Average Precision (MAP)</div>
+          <div class="detailed-metrics">
+            <div>Precision@5: <span id="svd-p5">0.0%</span></div>
+            <div>Recall@5: <span id="svd-r5">0.0%</span></div>
+          </div>
+        </div>
+
+        <!-- Hybrid Card -->
+        <div class="metric-card card hybrid-metric">
+          <h3>Hybrid (SVD + Content)</h3>
+          <div class="map-val" id="hybrid-map">0.0%</div>
+          <div class="metric-label">Mean Average Precision (MAP)</div>
+          <div class="detailed-metrics">
+            <div>Precision@5: <span id="hybrid-p5">0.0%</span></div>
+            <div>Recall@5: <span id="hybrid-r5">0.0%</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts Section -->
+      <div class="dashboard-charts card">
+        <h3>Precision & Recall Comparison Curves</h3>
+        <p class="chart-subtitle">Analyzing metric convergence across recommendation depths (K = 1, 3, 5, 10)</p>
+        <div class="charts-row">
+          <!-- Precision SVG Chart -->
+          <div class="chart-container">
+            <h4>Precision@K Curve (Higher is Better)</h4>
+            <div id="precision-chart-wrapper" class="svg-wrapper">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+
+          <!-- Recall SVG Chart -->
+          <div class="chart-container">
+            <h4>Recall@K Curve (Higher is Better)</h4>
+            <div id="recall-chart-wrapper" class="svg-wrapper">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -45,9 +45,13 @@ python3 backend/app/ingest_kaggle.py
 ```
 
 ### B. Dependencies Installation
-Install standard backend modules into your Python 3 environment:
+Install backend python libraries:
 ```bash
 pip3 install -r backend/requirements.txt
+```
+Install frontend node packages:
+```bash
+cd frontend && npm install
 ```
 
 ### C. Python Instantiation Test

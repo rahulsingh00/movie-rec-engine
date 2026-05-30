@@ -7,10 +7,16 @@ Create an interactive and gorgeous user interface to showcase movie listings, hi
 ## Acceptance Criteria
 
 - [x] Responsive web layout (sidebar/header + main content) utilizing grid and flexbox.
-- [x] Implement movie list search with autocomplete.
-- [x] Detail view for the selected movie showing its tagline, overview, genres, and a visual similarity bar.
-- [x] Recommendation grid showcasing the matching titles, their similarity score percentages, and matching genres.
+- [x] Implement movie list search with autocomplete. *(Augmented by Epic 5 Keyword vs Semantic toggles)*
+- [x] Detail view for the selected movie showing its tagline, overview, genres, and a visual similarity bar. *(Augmented by Epic 4 rating stars)*
+- [x] Recommendation grid showcasing the matching titles, their similarity score percentages, and matching genres. *(Augmented by Epic 4 hybrid SVD badges)*
 - [x] Modern UI details: dark glassmorphism styling, clean animations, and responsive breakpoints.
+
+> [!NOTE]
+> **Evolution of Specifications**:
+> - **Search Inputs** were augmented in **Epic 5** to track segmented click states (Keyword vs. Semantic) and route calls.
+> - **Movie Details and Recommendations** were augmented in **Epic 4** to support rating submissions and render user profile metrics (SVD predictions vs. TF-IDF similarity).
+> - **Dashboard views** were augmented in **Epic 6** to route into a full-width metrics verification panel featuring interactive graphs.
 
 ---
 

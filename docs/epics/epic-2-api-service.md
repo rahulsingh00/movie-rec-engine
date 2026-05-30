@@ -7,10 +7,15 @@ Expose the recommender engine through REST APIs using FastAPI, allowing the fron
 ## Acceptance Criteria
 
 - [x] Set up a FastAPI server running on `uvicorn`.
-- [x] Implement `GET /api/movies` to return a list of all movies in the dataset (with pagination/search filtering).
-- [x] Implement `GET /api/recommend/{movie_id}` which accepts a movie ID and return the top recommended matches with similarity scores.
+- [x] Implement `GET /api/movies` to return a list of all movies in the dataset (with pagination/search filtering). *(Augmented by Epic 5 Semantic search filters)*
+- [x] Implement `GET /api/recommend/{movie_id}` which accepts a movie ID and return the top recommended matches with similarity scores. *(Augmented by Epic 4 user Hybrid collaborative reranking)*
 - [x] Implement CORS middleware to allow connections from a separate frontend domain/port.
 - [x] Automatically document endpoints via Swagger (`/docs` page).
+
+> [!NOTE]
+> **Evolution of Specifications**: 
+> - The recommendations endpoint (`GET /api/recommend/{movie_id}`) was augmented in **Epic 4** to accept an optional `user_id` query parameter for hybrid scoring.
+> - The movie catalog search was expanded in **Epic 5** to support semantic matches (`GET /api/search/semantic`) alongside traditional keyword queries.
 
 ---
 

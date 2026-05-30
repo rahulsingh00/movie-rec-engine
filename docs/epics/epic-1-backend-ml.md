@@ -9,9 +9,12 @@ Implement the core NLP and recommendation algorithms in Python using `scikit-lea
 - [x] Load and clean a movie dataset (CSV format) including overviews, genres, taglines, and titles.
 - [x] Implement text preprocessing (handling missing values, lowercasing, and basic cleaning).
 - [x] Build a TF-IDF vectorizer to extract term frequencies and document frequencies.
-- [x] Calculate the Cosine Similarity matrix for the entire dataset.
+- [x] Calculate the Cosine Similarity matrix for the entire dataset. *(Obsolete — Replaced by dynamic on-the-fly similarity computations in Epic 7)*
 - [x] Expose an internal API/method `get_recommendations(movie_id, limit)` that retrieves the top $N$ closest movies based on cosine similarity scores.
 - [x] Provide fallback logic if a requested movie is not found.
+
+> [!NOTE]
+> **Evolution of Specifications**: Calculating and pre-storing the full $N \times N$ similarity matrix in memory on startup (as originally designed in Epic 1) was rendered obsolete by **Epic 7 (Kaggle Scale Optimization)** to prevent memory exhaustion (OOM). We now perform dynamic sparse vector dot products on-the-fly.
 
 ---
 

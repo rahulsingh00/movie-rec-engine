@@ -4,13 +4,13 @@ Implement a collaborative filtering module using user-movie rating profiles to c
 
 ## Acceptance Criteria
 
-- [ ] Set up a lightweight **SQLite database** using SQLAlchemy/SQLModel to store user profiles and rating transactions.
-- [ ] Generate synthetic users and ratings data, seeding them directly into the SQLite database.
-- [ ] Implement a Matrix Factorization / Singular Value Decomposition (SVD) algorithm (using standard library algorithms or `scipy`) that queries ratings from the database.
-- [ ] Build a hybrid recommendation method combining content cosine similarity scores and collaborative predicted ratings:
+- [x] Set up a lightweight **SQLite database** using SQLAlchemy/SQLModel to store user profiles and rating transactions.
+- [x] Generate synthetic users and ratings data, seeding them directly into the SQLite database.
+- [x] Implement a Matrix Factorization / Singular Value Decomposition (SVD) algorithm (using standard library algorithms or `scipy`) that queries ratings from the database.
+- [x] Build a hybrid recommendation method combining content cosine similarity scores and collaborative predicted ratings:
   $$\text{Hybrid Score} = \alpha \cdot \text{Similarity Score} + (1 - \alpha) \cdot \text{Predicted User Rating}$$
-- [ ] Update FastAPI REST endpoints to accept a `user_id` query parameter to query ratings from the SQLite DB and serve personalized hybrid recommendations.
-- [ ] Implement a user selector in the UI sidebar to toggle profiles and dynamically submit rating stars (1–5) to write to the DB.
+- [x] Update FastAPI REST endpoints to accept a `user_id` query parameter to query ratings from the SQLite DB and serve personalized hybrid recommendations.
+- [x] Implement a user selector in the UI sidebar to toggle profiles and dynamically submit rating stars (1–5) to write to the DB.
 
 ---
 

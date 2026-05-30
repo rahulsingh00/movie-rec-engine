@@ -27,10 +27,33 @@
 | 1 | [Backend ML & NLP Model](epics/epic-1-backend-ml.md) | ✅ Completed | P0 |
 | 2 | [FastAPI REST Service](epics/epic-2-api-service.md) | ✅ Completed | P0 |
 | 3 | [Responsive Web UI](epics/epic-3-ui-shell.md) | ✅ Completed | P0 |
-| 4 | [Collaborative Filtering Hybrid Sandbox](epics/epic-4-collaborative.md) | ⚪ Planned | P1 |
-| 5 | [Sentence-Transformers Semantic Search](epics/epic-5-semantic-search.md) | ⚪ Planned | P1 |
-| 6 | [Evaluation Dashboard & Metrics](epics/epic-6-evaluation.md) | ⚪ Planned | P2 |
-| 7 | [Kaggle Movie Dataset Integration & Scale Optimization](epics/epic-7-kaggle-integration.md) | ⚪ Planned | P1 |
+| 4 | [Collaborative Filtering Hybrid Sandbox](epics/epic-4-collaborative.md) | ✅ Completed | P1 |
+| 5 | [Sentence-Transformers Semantic Search](epics/epic-5-semantic-search.md) | ✅ Completed | P1 |
+| 6 | [Evaluation Dashboard & Metrics](epics/epic-6-evaluation.md) | ✅ Completed | P2 |
+| 7 | [Kaggle Movie Dataset Integration & Scale Optimization](epics/epic-7-kaggle-integration.md) | ✅ Completed | P1 |
+| 8 | [Vector Database Migration (FAISS / Qdrant / Chroma)](epics/epic-8-vector-db.md) | ⚪ Planned | P2 |
+| 9 | [Real-time User Activity Logging & Implicit Feedback](epics/epic-9-implicit-feedback.md) | ⚪ Planned | P2 |
+| 10 | [Serverless Production Deployment & Cloud Scale](epics/epic-10-cloud-deployment.md) | ⚪ Planned | P3 |
+
+---
+
+## 🛠️ Installation & Setup
+
+Before running the application, you must install dependencies for both the backend (Python 3) and the frontend (Node.js).
+
+### 1. Backend Dependencies Installation
+Open your terminal and run:
+```bash
+pip3 install -r backend/requirements.txt
+```
+*Note: This will install FastAPI, Uvicorn, Pandas, and Scikit-learn required by the recommendation engine.*
+
+### 2. Frontend Dependencies Installation
+Navigate to the `frontend/` folder and run `npm install` to setup Vite:
+```bash
+cd frontend
+npm install
+```
 
 ---
 
@@ -39,27 +62,19 @@
 To experience and test the completed implementation:
 
 ### 1. Run the Backend API
-1. Install Python dependencies:
-   ```bash
-   pip3 install -r backend/requirements.txt
-   ```
-2. Run the FastAPI development server:
-   ```bash
-   python3 backend/run.py
-   ```
-   The backend will start on `http://127.0.0.1:8000`. You can access interactive Swagger documentation at `http://127.0.0.1:8000/docs`.
+Run the FastAPI development server:
+```bash
+python3 backend/run.py
+```
+The backend will start on `http://127.0.0.1:8000`. You can access interactive Swagger documentation at `http://127.0.0.1:8000/docs`.
 
 ### 2. Run the Frontend App
-1. Navigate to the `frontend/` directory and install npm packages:
-   ```bash
-   cd frontend
-   npm install
-   ```
-2. Start the Vite dev server:
-   ```bash
-   npm run dev
-   ```
-   Open the displayed localhost URL (usually `http://localhost:5173`) in your browser to interact with the movie recommender!
+Start the Vite dev server:
+```bash
+cd frontend
+npm run dev
+```
+Open the displayed localhost URL (usually `http://localhost:5173`) in your browser to interact with the movie recommender!
 
 ---
 

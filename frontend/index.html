@@ -30,9 +30,13 @@
       <div class="logo">
         <span class="logo-icon">🎬</span>
         <h1>CineMatch</h1>
-        <span class="badge">NLP/ML Sandbox</span>
+        <span class="badge">Hybrid RecSys Sandbox</span>
       </div>
       <div class="header-actions">
+        <nav class="nav-tabs">
+          <button id="tab-recommender" class="nav-tab-btn active">Recommender</button>
+          <button id="tab-evaluation" class="nav-tab-btn">Evaluation Dashboard</button>
+        </nav>
         <a href="../docs/README.md" class="docs-link" target="_blank">📖 Read Docs</a>
         <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle dark mode">
           <span class="toggle-icon">🌓</span>
@@ -40,15 +44,31 @@
       </div>
     </header>
 
-    <!-- App Layout -->
-    <div class="main-layout">
+    <!-- App Layout (Recommender View) -->
+    <div class="main-layout" id="recommender-view">
       
       <!-- Sidebar -->
       <aside class="sidebar">
+        <!-- User Simulator Dropdown -->
+        <section class="user-simulator-section">
+          <h2>Active User Profile</h2>
+          <div class="select-wrapper">
+            <select id="user-select" class="user-select">
+              <option value="">Guest Mode (Content Only)</option>
+              <!-- Seeded users populated dynamically -->
+            </select>
+          </div>
+        </section>
+
+        <!-- Search Section -->
         <section class="search-section">
           <h2>Search Movie Library</h2>
+          <div class="search-mode-container">
+            <button class="search-mode-btn active" id="search-mode-keyword" data-mode="Keyword">Keyword</button>
+            <button class="search-mode-btn" id="search-mode-semantic" data-mode="Semantic">Semantic (AI)</button>
+          </div>
           <div class="search-wrapper">
-            <input type="text" id="search-input" placeholder="Type a title or genre..." autocomplete="off">
+            <input type="text" id="search-input" placeholder="Type a title, concept, or genre..." autocomplete="off">
             <span class="search-icon">🔍</span>
           </div>
         </section>
@@ -86,11 +106,11 @@
         <!-- Dynamic Explainer of the Vector Space matching -->
         <section id="math-explainer" class="math-explainer card hidden">
           <div class="explainer-header">
-            <h3>🔬 NLP Similarity Analysis</h3>
-            <span class="algorithm-tag">TF-IDF Vector Space Model</span>
+            <h3>🔬 RecSys Similarity Analysis</h3>
+            <span class="algorithm-tag" id="explainer-tag">TF-IDF Vector Space Model</span>
           </div>
           <div class="explainer-body">
-            <p>
+            <p id="explainer-text">
               To find recommendations, the backend converted movie overviews and genres into a <strong>TF-IDF Vector</strong> (excluding stop words). 
               We calculate the <strong>Cosine Similarity</strong> ($\cos \theta$) between the selected movie's vector and every other movie. 
               The matches below have the highest similarity score.
@@ -101,8 +121,8 @@
         <!-- Recommendations Grid -->
         <section id="recommendations-section" class="recommendations-section hidden">
           <div class="section-title-bar">
-            <h2>Recommended Matches</h2>
-            <span class="subtext">Sorted by Cosine Similarity Score</span>
+            <h2 id="recommendations-title">Recommended Matches</h2>
+            <span class="subtext" id="recommendations-subtext">Sorted by Cosine Similarity Score</span>
           </div>
           <div id="recommendations-grid" class="recommendations-grid">
             <!-- Populated dynamically -->
@@ -110,6 +130,76 @@
         </section>
 
       </main>
+    </div>
+
+    <!-- Evaluation Dashboard View -->
+    <div class="evaluation-view hidden" id="evaluation-view">
+      <div class="dashboard-header card">
+        <div class="header-main">
+          <h2>🔬 Recommendation Quality Evaluation</h2>
+          <span class="badge">Offline Metrics Sandbox</span>
+        </div>
+        <p>Scientific comparison of recommendation algorithms trained and tested on split user rating matrices (80% training, 20% validation).</p>
+      </div>
+
+      <!-- Metrics Summaries Grid -->
+      <div class="metrics-grid">
+        <!-- Content Card -->
+        <div class="metric-card card content-metric">
+          <h3>TF-IDF Content-Based</h3>
+          <div class="map-val" id="content-map">0.0%</div>
+          <div class="metric-label">Mean Average Precision (MAP)</div>
+          <div class="detailed-metrics">
+            <div>Precision@5: <span id="content-p5">0.0%</span></div>
+            <div>Recall@5: <span id="content-r5">0.0%</span></div>
+          </div>
+        </div>
+
+        <!-- SVD Card -->
+        <div class="metric-card card svd-metric">
+          <h3>SVD Collaborative</h3>
+          <div class="map-val" id="svd-map">0.0%</div>
+          <div class="metric-label">Mean Average Precision (MAP)</div>
+          <div class="detailed-metrics">
+            <div>Precision@5: <span id="svd-p5">0.0%</span></div>
+            <div>Recall@5: <span id="svd-r5">0.0%</span></div>
+          </div>
+        </div>
+
+        <!-- Hybrid Card -->
+        <div class="metric-card card hybrid-metric">
+          <h3>Hybrid (SVD + Content)</h3>
+          <div class="map-val" id="hybrid-map">0.0%</div>
+          <div class="metric-label">Mean Average Precision (MAP)</div>
+          <div class="detailed-metrics">
+            <div>Precision@5: <span id="hybrid-p5">0.0%</span></div>
+            <div>Recall@5: <span id="hybrid-r5">0.0%</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts Section -->
+      <div class="dashboard-charts card">
+        <h3>Precision & Recall Comparison Curves</h3>
+        <p class="chart-subtitle">Analyzing metric convergence across recommendation depths (K = 1, 3, 5, 10)</p>
+        <div class="charts-row">
+          <!-- Precision SVG Chart -->
+          <div class="chart-container">
+            <h4>Precision@K Curve (Higher is Better)</h4>
+            <div id="precision-chart-wrapper" class="svg-wrapper">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+
+          <!-- Recall SVG Chart -->
+          <div class="chart-container">
+            <h4>Recall@K Curve (Higher is Better)</h4>
+            <div id="recall-chart-wrapper" class="svg-wrapper">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
