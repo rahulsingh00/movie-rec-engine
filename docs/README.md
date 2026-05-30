@@ -29,6 +29,7 @@
 | 4 | [Collaborative Filtering Hybrid Sandbox](epics/epic-4-collaborative.md) | ⚪ Planned | P1 |
 | 5 | [Sentence-Transformers Semantic Search](epics/epic-5-semantic-search.md) | ⚪ Planned | P1 |
 | 6 | [Evaluation Dashboard & Metrics](epics/epic-6-evaluation.md) | ⚪ Planned | P2 |
+| 7 | [Kaggle Movie Dataset Integration & Scale Optimization](epics/epic-7-kaggle-integration.md) | ⚪ Planned | P1 |
 
 ---
 
